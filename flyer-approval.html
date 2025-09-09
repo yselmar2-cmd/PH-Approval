@@ -26,6 +26,12 @@
       text-align: center;
       margin-bottom: 20px;
     }
+    .error {
+      color: red;
+      text-align: center;
+      font-size: 18px;
+      margin-top: 50px;
+    }
   </style>
 </head>
 <body>
@@ -40,30 +46,32 @@
   </div>
 
   <script>
-    // Grab query params
+    // Grab query parameters
     const params = new URLSearchParams(window.location.search);
     const submissionID = params.get("sid");
     const formID = params.get("formID");
 
-    // Build flyer PDF URL
-    const pdfURL = `https://www.jotform.com/server.php?action=getSubmissionPDF&sid=${submissionID}&formID=${formID}`;
+    // Show error if submissionID or formID is missing
+    if (!submissionID || !formID) {
+      document.body.innerHTML = "<h2 class='error'>Error: Submission ID or Form ID missing. Please submit the flyer form first.</h2>";
+    } else {
+      // -----------------------------
+      // 1️⃣ PDF Preview using Google Docs Viewer
+      // -----------------------------
+      const pdfURL = `https://www.jotform.com/server.php?action=getSubmissionPDF&sid=${submissionID}&formID=${formID}`;
+      const googleViewerURL = `https://docs.google.com/gview?url=${encodeURIComponent(pdfURL)}&embedded=true`;
 
-   // Your approval form ID (from Step 1)
-const approvalFormID = "252510862934054";  
+      document.getElementById("flyerPDF").src = googleViewerURL;
 
-// Your hidden field's unique name (from Step 3 in Jotform)
-const hiddenFieldName = "submissionId";  
+      // -----------------------------
+      // 2️⃣ Approval Form
+      // -----------------------------
+      const approvalFormID = "252500289306150";  // Replace with your Approval Form ID
+      const hiddenFieldName = "submissionId";          // Replace with your hidden field unique name
+      const approvalFormURL = `https://form.jotform.com/${approvalFormID}?${hiddenFieldName}=${submissionID}`;
 
-// Build the approval form URL with prefill
-const approvalFormURL = `https://form.jotform.com/${approvalFormID}?${hiddenFieldName}=${submissionID}`;
-
-// Insert the URL into the iframe
-document.getElementById("approvalForm").src = approvalFormURL;
-
-
-    // Insert URLs into iframes
-    document.getElementById("flyerPDF").src = pdfURL;
-    document.getElementById("approvalForm").src = approvalFormURL;
+      document.getElementById("approvalForm").src = approvalFormURL;
+    }
   </script>
 </body>
 </html>
