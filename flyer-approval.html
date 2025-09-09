@@ -48,9 +48,18 @@
     // Build flyer PDF URL
     const pdfURL = `https://www.jotform.com/server.php?action=getSubmissionPDF&sid=${submissionID}&formID=${formID}`;
 
-    // Approval form (replace with your actual form ID!)
-    const approvalFormID = "YOUR_APPROVAL_FORM_ID"; 
-    const approvalFormURL = `https://form.jotform.com/${approvalFormID}?submissionID=${submissionID}`;
+   // Your approval form ID (from Step 1)
+const approvalFormID = "252510862934054";  
+
+// Your hidden field's unique name (from Step 3 in Jotform)
+const hiddenFieldName = "submissionId";  
+
+// Build the approval form URL with prefill
+const approvalFormURL = `https://form.jotform.com/${approvalFormID}?${hiddenFieldName}=${submissionID}`;
+
+// Insert the URL into the iframe
+document.getElementById("approvalForm").src = approvalFormURL;
+
 
     // Insert URLs into iframes
     document.getElementById("flyerPDF").src = pdfURL;
