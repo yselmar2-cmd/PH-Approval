@@ -35,24 +35,24 @@
     <!-- PDF Preview -->
     <iframe id="flyerPDF" title="Flyer Preview"></iframe>
 
-    <!-- Second Jotform for Approval -->
+    <!-- Approval Form -->
     <iframe id="approvalForm" title="Approval Form"></iframe>
   </div>
 
   <script>
-    // Get query parameters from URL
+    // Grab query params
     const params = new URLSearchParams(window.location.search);
     const submissionID = params.get("sid");
     const formID = params.get("formID");
 
-    // Construct Jotform PDF link
+    // Build flyer PDF URL
     const pdfURL = `https://www.jotform.com/server.php?action=getSubmissionPDF&sid=${submissionID}&formID=${formID}`;
 
-    // Approval form (replace with your actual Jotform approval form ID)
-    const approvalFormID = "123456789012345";
+    // Approval form (replace with your actual form ID!)
+    const approvalFormID = "YOUR_APPROVAL_FORM_ID"; 
     const approvalFormURL = `https://form.jotform.com/${approvalFormID}?submissionID=${submissionID}`;
 
-    // Insert into iframes
+    // Insert URLs into iframes
     document.getElementById("flyerPDF").src = pdfURL;
     document.getElementById("approvalForm").src = approvalFormURL;
   </script>
