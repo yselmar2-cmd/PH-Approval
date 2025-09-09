@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Flyer Approval</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f8f9fa;
+    }
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    iframe {
+      width: 100%;
+      height: 90vh;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+    h1 {
+      grid-column: span 2;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Your Flyer Preview & Approval</h1>
+
+    <!-- PDF Preview -->
+    <iframe id="flyerPDF" title="Flyer Preview"></iframe>
+
+    <!-- Second Jotform for Approval -->
+    <iframe id="approvalForm" title="Approval Form"></iframe>
+  </div>
+
+  <script>
+    // Get query parameters from URL
+    const params = new URLSearchParams(window.location.search);
+    const submissionID = params.get("sid");
+    const formID = params.get("formID");
+
+    // Construct Jotform PDF link
+    const pdfURL = `https://www.jotform.com/server.php?action=getSubmissionPDF&sid=${submissionID}&formID=${formID}`;
+
+    // Approval form (replace with your actual Jotform approval form ID)
+    const approvalFormID = "123456789012345";
+    const approvalFormURL = `https://form.jotform.com/${approvalFormID}?submissionID=${submissionID}`;
+
+    // Insert into iframes
+    document.getElementById("flyerPDF").src = pdfURL;
+    document.getElementById("approvalForm").src = approvalFormURL;
+  </script>
+</body>
+</html>
